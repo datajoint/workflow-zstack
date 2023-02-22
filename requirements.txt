@@ -1,0 +1,7 @@
+datajoint>=0.13.0
+element-animal
+element-lab
+element-session
+element-volume
+intern
+# boss-ingest
