@@ -6,9 +6,8 @@ from element_lab import lab
 from element_lab.lab import Lab, Project, Protocol, Source, User  # Deps for Subject
 from element_session import session_with_id as session
 from element_session.session_with_id import Session, SessionDirectory
-from element_volume import bossdb, volume
-from element_volume.bossdb import BossDBURLs
-from element_volume.readers.bossdb import BossDBInterface
+from element_zstack import volume
+from element_zstack.export import bossdb
 
 from . import db_prefix
 from .paths import get_session_directory, get_vol_root_data_dir
@@ -23,8 +22,8 @@ __all__ = [
     "session",
     "subject",
     "surgery",
-    "bossdb",
     "volume",
+    "bossdb",
     "Device",
     "Lab",
     "Project",
@@ -35,8 +34,6 @@ __all__ = [
     "SessionDirectory",
     "Subject",
     "BrainRegion",
-    "BossDBURLs",
-    "BossDBInterface",
     "get_session_directory",
     "get_vol_root_data_dir",
 ]
@@ -55,8 +52,8 @@ Equipment = Device
 Location = BrainRegion
 imaging.activate(db_prefix + "imaging", db_prefix + "scan", linking_module=__name__)
 
-bossdb.activate(db_prefix + "bossdb")
-
-URLs = bossdb.BossDBURLs
 Mask = imaging.Segmentation.Mask
+Scan = scan.Scan
+
 volume.activate(db_prefix + "volume", linking_module=__name__)
+bossdb.activate(db_prefix + "bossdb", linking_module=__name__)
