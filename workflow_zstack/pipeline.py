@@ -1,16 +1,12 @@
 from element_animal import subject, surgery
-from element_animal.subject import Subject  # Dependency for session
-from element_animal.surgery import BrainRegion  # Dependency for imaging
 from element_calcium_imaging import imaging, imaging_report, scan
 from element_lab import lab
-from element_lab.lab import Lab, Project, Protocol, Source, User  # Deps for Subject
 from element_session import session_with_id as session
-from element_session.session_with_id import Session, SessionDirectory
 from element_zstack import volume
 from element_zstack.export import bossdb
 
 from . import db_prefix
-from .paths import get_session_directory, get_vol_root_data_dir
+from .paths import get_session_directory, get_volume_root_data_dir, get_volume_tif_file
 from .reference import Device
 
 __all__ = [
@@ -25,17 +21,9 @@ __all__ = [
     "volume",
     "bossdb",
     "Device",
-    "Lab",
-    "Project",
-    "Protocol",
-    "User",
-    "Source",
-    "Session",
-    "SessionDirectory",
-    "Subject",
-    "BrainRegion",
     "get_session_directory",
-    "get_vol_root_data_dir",
+    "get_volume_root_data_dir",
+    "get_volume_tif_file",
 ]
 
 # ---------------------------------- Activate schemas ----------------------------------
@@ -49,11 +37,11 @@ Experimenter = lab.User
 session.activate(db_prefix + "session", linking_module=__name__)
 
 Equipment = Device
-Location = BrainRegion
 imaging.activate(db_prefix + "imaging", db_prefix + "scan", linking_module=__name__)
 
 Mask = imaging.Segmentation.Mask
+Session = session.Session
+SessionDirectory = session.SessionDirectory
 Scan = scan.Scan
-
 volume.activate(db_prefix + "volume", linking_module=__name__)
 bossdb.activate(db_prefix + "bossdb", linking_module=__name__)
