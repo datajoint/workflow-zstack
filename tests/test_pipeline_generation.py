@@ -1,18 +1,26 @@
 def test_generate_pipeline(pipeline):
+    subject = pipeline["subject"]
     session = pipeline["session"]
-    volume = pipeline["volume"]
+    ephys = pipeline["ephys"]
+    probe = pipeline["probe"]
+    ephys_report = pipeline["ephys_report"]
 
-    volume_children = volume.volume.children()
-    assert volume.Volume.full_table_name in volume_children
-    assert session.Session.volume.full_table_name in volume_children
+    # test elements connection from lab, subject to Session
+    assert subject.Subject.full_table_name in session.Session.parents()
 
-    # test connection Subject -> schema children
-    session_children_links = session.Session.children()
-    session_children_list = [
-        volume.Volume,
-    ]
+    # test elements connection from Session to probe, ephys, ephys_report
+    assert session.Session.full_table_name in ephys.ProbeInsertion.parents()
+    assert probe.Probe.full_table_name in ephys.ProbeInsertion.parents()
+    assert "spike_times" in (ephys.CuratedClustering.Unit.heading.secondary_attributes)
 
-    for child in session_children_list:
-        assert (
-            child.full_table_name in session_children_links
-        ), f"session.Session.children() did not include {child.full_table_name}"
+    assert all(
+        [
+            ephys.CuratedClustering.full_table_name
+            in ephys_report.ProbeLevelReport.parents(),
+            ephys.CuratedClustering.Unit.full_table_name
+            in ephys_report.UnitLevelReport.parents(),
+        ]
+    )
+    
+    # test the connection between quality metric tables
+    assert ephys.QualityMetrics.full_table_name in ephys_report.QualityMetricSet.parents()
