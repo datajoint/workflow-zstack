@@ -1,7 +1,8 @@
 datajoint>=0.13.0
-element-animal
-element-lab
-element-session
-element-calcium-imaging
-element-zstack
-intern
+element-animal>=0.1.5
+element-lab>=0.2.0
+element-session>=0.1.2
+element-calcium-imaging>=0.5.5
+element-zstack>=0.1.0
+intern>=1.4.1
+ipykernel>=6.0.1
