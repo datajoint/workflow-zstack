@@ -37,6 +37,7 @@ ENV DJ_HOST fakeservices.datajoint.io
 ENV DJ_USER root
 ENV DJ_PASS simple
 
+ENV VOLUME_ROOT_DATA_DIR /workspaces/workflow-zstack/example_data
 ENV DATABASE_PREFIX neuro_
 
 USER vscode
