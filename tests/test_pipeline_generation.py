@@ -1,26 +1,26 @@
 def test_generate_pipeline(pipeline):
     subject = pipeline["subject"]
     session = pipeline["session"]
-    ephys = pipeline["ephys"]
-    probe = pipeline["probe"]
-    ephys_report = pipeline["ephys_report"]
+    scan = pipeline["scan"]
+    volume = pipeline["volume"]
+    volume_matching = pipeline["volume_matching"]
+    bossdb = pipeline["bossdb"]
 
     # test elements connection from lab, subject to Session
     assert subject.Subject.full_table_name in session.Session.parents()
 
     # test elements connection from Session to probe, ephys, ephys_report
-    assert session.Session.full_table_name in ephys.ProbeInsertion.parents()
-    assert probe.Probe.full_table_name in ephys.ProbeInsertion.parents()
-    assert "spike_times" in (ephys.CuratedClustering.Unit.heading.secondary_attributes)
+    assert session.Session.full_table_name in scan.Scan.parents()
+    assert scan.Scan.full_table_name in volume.Volume.parents()
+    assert "mask_npix" in (volume.Segmentation.Mask.heading.secondary_attributes)
 
     assert all(
         [
-            ephys.CuratedClustering.full_table_name
-            in ephys_report.ProbeLevelReport.parents(),
-            ephys.CuratedClustering.Unit.full_table_name
-            in ephys_report.UnitLevelReport.parents(),
+            bossdb.VolumeUploadTask.full_table_name in bossdb.BossDBURLs.parents(),
+            volume.Volume.full_table_name in bossdb.VolumeUploadTask.parents(),
         ]
     )
-    
-    # test the connection between quality metric tables
-    assert ephys.QualityMetrics.full_table_name in ephys_report.QualityMetricSet.parents()
+
+    assert "confidence" in (
+        volume_matching.VolumeMatch.VolumeMask.heading.secondary_attributes
+    )

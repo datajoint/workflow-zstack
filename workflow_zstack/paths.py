@@ -37,7 +37,7 @@ def get_volume_root_data_dir() -> List[str]:
     Returns:
         path (any): List of path(s) if available or None
     """
-    vol_root_dirs = dj.config.get("custom", {}).get("vol_root_data_dir", None)
+    vol_root_dirs = dj.config.get("custom", {}).get("volume_root_data_dir", None)
     if not vol_root_dirs:
         return None
     elif not isinstance(vol_root_dirs, Sequence):

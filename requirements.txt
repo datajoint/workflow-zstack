@@ -3,5 +3,5 @@ element-animal
 element-lab
 element-session
 element-calcium-imaging
-element-bossdb
+element-zstack
 intern
