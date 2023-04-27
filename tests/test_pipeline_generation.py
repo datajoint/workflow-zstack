@@ -6,7 +6,7 @@ def test_generate_pipeline(pipeline):
     volume_matching = pipeline["volume_matching"]
     bossdb = pipeline["bossdb"]
 
-    # test elements connection from lab, subject to Session
+    # Test connection from Subject to Session
     assert subject.Subject.full_table_name in session.Session.parents()
 
     # test elements connection from Session to probe, ephys, ephys_report
