@@ -9,7 +9,7 @@ def test_generate_pipeline(pipeline):
     # Test connection from Subject to Session
     assert subject.Subject.full_table_name in session.Session.parents()
 
-    # test elements connection from Session to probe, ephys, ephys_report
+    # Test connection from Session to Scan and Scan to Volume
     assert session.Session.full_table_name in scan.Scan.parents()
     assert scan.Scan.full_table_name in volume.Volume.parents()
     assert "mask_npix" in (volume.Segmentation.Mask.heading.secondary_attributes)
