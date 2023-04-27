@@ -7,4 +7,4 @@ Observes [Semantic Versioning](https://semver.org/spec/v2.0.0.html) standard and
 
 + Add - Workflow pipeline, pytests, CICD
 
-[0.1.0]: https://github.com/datajoint/workflow-session/releases/tag/0.1.0
+[0.1.0]: https://github.com/datajoint/workflow-zstack/releases/tag/0.1.0
