@@ -4,7 +4,7 @@ from element_lab.lab import Lab, Location, Project, Protocol, Source, User
 from element_animal import subject, surgery
 from element_animal.subject import Subject
 from element_session import session_with_id as session
-from element_calcium_imaging import imaging, imaging_report, scan
+from element_calcium_imaging import imaging, scan
 from element_zstack import volume, volume_matching, bossdb
 
 from . import db_prefix

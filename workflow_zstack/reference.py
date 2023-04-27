@@ -22,6 +22,5 @@ class Device(dj.Lookup):
     description=null   : varchar(256)
     """
     contents = [
-        ["scanner1", "calcium imaging", ""],
-        ["scanner2", "calcium imaging", ""],
+        ["scanner1", "fluorescence microscope", ""],
     ]
