@@ -1,12 +1,15 @@
+// For format details, see https://aka.ms/devcontainer.json.
 {
-	"name": "Local Test",
+	"name": "Local test environment with remote data",
 	"dockerComposeFile": "docker-compose.yaml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
-	"onCreateCommand": "pip install -r ./requirements_dev.txt && pip install -e . && pip install -e ../element-zstack && MYSQL_VER=8.0 docker compose down && MYSQL_VER=8.0 docker compose up --build --wait",
+	// https://containers.dev/features
+	"onCreateCommand": "pip install -e . && MYSQL_VER=8.0 docker compose down && MYSQL_VER=8.0 docker compose up --build --wait",
 	"postStartCommand": "docker volume prune -f",
 	"hostRequirements": {
 		"cpus": 4,
