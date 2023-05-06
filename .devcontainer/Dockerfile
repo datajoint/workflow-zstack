@@ -25,18 +25,22 @@ RUN \
     # dircolors -b >> /home/vscode/.bashrc && \  # somehow fix colors
     apt-get clean
 COPY ./requirements.txt /tmp/
+COPY ./requirements_dev.txt /tmp/
 RUN \
     # workflow dependencies
     apt-get install gcc ffmpeg libsm6 libxext6 -y && \
     pip install --no-cache-dir -r /tmp/requirements.txt && \
+    pip install --no-cache-dir -r /tmp/requirements_dev.txt && \
     # clean up
     rm /tmp/requirements.txt && \
+    rm /tmp/requirements_dev.txt && \
     apt-get clean
 
 ENV DJ_HOST fakeservices.datajoint.io
 ENV DJ_USER root
 ENV DJ_PASS simple
 
+ENV DJ_PUBLIC_S3_MOUNT_PATH /workspaces/workflow-zstack/example_data
 ENV VOLUME_ROOT_DATA_DIR /workspaces/workflow-zstack/example_data
 ENV DATABASE_PREFIX neuro_
 
