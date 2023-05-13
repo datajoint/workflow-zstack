@@ -75,3 +75,6 @@ ENV/
 dj_local_c*.json
 temp*
 *nwb
+
+# vscode
+*.code-workspace

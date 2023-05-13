@@ -24,7 +24,7 @@ setup(
     author_email="info@datajoint.com",
     license="MIT",
     url="https://github.com/datajoint/workflow-zstack",
-    keywords="neuroscience volumetric BossDB datajoint",
+    keywords="neuroscience volumetric bossdb datajoint",
     packages=find_packages(exclude=["contrib", "docs", "tests*"]),
     install_requires=requirements,
 )
