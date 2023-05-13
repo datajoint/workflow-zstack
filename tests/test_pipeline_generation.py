@@ -16,11 +16,13 @@ def test_generate_pipeline(pipeline):
 
     assert all(
         [
-            bossdb.VolumeUploadTask.full_table_name in bossdb.BossDBURLs.parents(),
-            volume.Volume.full_table_name in bossdb.VolumeUploadTask.parents(),
+            bossdb.VolumeUploadTask.full_table_name in bossdb.VolumeUpload.parents(),
+            volume.Segmentation.full_table_name in bossdb.VolumeUploadTask.parents(),
         ]
     )
 
     assert "confidence" in (
         volume_matching.VolumeMatch.VolumeMask.heading.secondary_attributes
     )
+
+    assert "web_adress" in (bossdb.VolumeUpload.WebAddress.heading.secondary_attributes)
