@@ -16,7 +16,6 @@ __all__ = [
     "lab",
     "scan",
     "imaging",
-    "imaging_report",
     "session",
     "subject",
     "surgery",
