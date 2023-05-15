@@ -15,42 +15,12 @@ from workflow_zstack.paths import get_volume_root_data_dir
 
 logger = logging.getLogger("datajoint")
 
-pathlib.Path("../example_data").mkdir(exist_ok=True)
 
 sessions_dirs = [
     "subject1",
 ]
 
 
-def pytest_addoption(parser):
-    """
-    Permit constants when calling pytest at command line e.g., pytest --dj-verbose False
-
-    Arguments:
-        --dj-verbose (bool):  Default True. Pass print statements from Elements.
-        --dj-teardown (bool): Default True. Delete pipeline on close.
-        --dj-datadir (str):  Default ./tests/user_data. Relative path of test CSV data.
-    """
-    parser.addoption(
-        "--dj-verbose",
-        action="store",
-        default="True",
-        help="Verbose for dj items: True or False",
-        choices=("True", "False"),
-    )
-    parser.addoption(
-        "--dj-teardown",
-        action="store",
-        default="True",
-        help="Verbose for dj items: True or False",
-        choices=("True", "False"),
-    )
-    parser.addoption(
-        "--dj-datadir",
-        action="store",
-        default="./tests/user_data",
-        help="Relative path for saving tests data",
-    )
 
 
 @pytest.fixture(autouse=True, scope="session")
