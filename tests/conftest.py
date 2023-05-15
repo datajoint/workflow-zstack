@@ -18,7 +18,7 @@ logger = logging.getLogger("datajoint")
 pathlib.Path("../example_data").mkdir(exist_ok=True)
 
 sessions_dirs = [
-    "sub1",
+    "subject1",
 ]
 
 
