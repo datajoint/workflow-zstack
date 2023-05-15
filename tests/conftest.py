@@ -81,34 +81,6 @@ def null_function(*args, **kwargs):
 # ---------------------- FIXTURES ----------------------
 
 
-@pytest.fixture(autouse=True, scope="session")
-def dj_config(setup):
-    """If dj_local_config exists, load"""
-    if pathlib.Path("./dj_local_conf.json").exists():
-        dj.config.load("./dj_local_conf.json")
-    dj.config.update(
-        {
-            "safemode": False,
-            "database.host": os.environ.get("DJ_HOST") or dj.config["database.host"],
-            "database.password": os.environ.get("DJ_PASS")
-            or dj.config["database.password"],
-            "database.user": os.environ.get("DJ_USER") or dj.config["database.user"],
-            "custom": {
-                "database.prefix": (
-                    os.environ.get("DATABASE_PREFIX")
-                    or dj.config["custom"]["database.prefix"]
-                ),
-                "volume_root_data_dir": (
-                    os.environ.get("VOLUME_ROOT_DATA_DIR").split(",")
-                    if os.environ.get("VOLUME_ROOT_DATA_DIR")
-                    else dj.config["custom"]["volume_root_data_dir"]
-                ),
-            },
-        }
-    )
-    return
-
-
 @pytest.fixture(scope="session")
 def test_data(dj_config):
     test_data_exists = True
