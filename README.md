@@ -1,6 +1,6 @@
-# DataJoint Workflow for ZStack
+# DataJoint Workflow for ZStack Imaging
 
-The DataJoint Workflow for ZStack combines five DataJoint Elements for cell 
+The DataJoint Workflow for ZStack Imaging combines five DataJoint Elements for cell 
 segmentation, volume registration, and cell matching - Elements Lab, 
 Animal, Session, Calcium Imaging, and ZStack.  DataJoint Elements collectively standardize and automate data collection and 
 analysis for neuroscience experiments.  Each Element is a modular pipeline for data 
