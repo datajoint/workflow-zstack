@@ -1,4 +1,11 @@
 def test_export(pipeline):
+    """Test export to BossDB.
+
+    Please note that uploading data to BossDB via this pipeline requires an API
+    token which can be obtained by creating an account at
+    https://api.bossdb.io. You will also need resource manager permissions from the team at https://bossdb.org.
+    """
+    
     scan = pipeline["scan"]
     bossdb = pipeline["bossdb"]
 
