@@ -20,23 +20,6 @@ sessions_dirs = [
     "subject1",
 ]
 
-
-
-
-    if not verbose:
-        logging.getLogger("datajoint").setLevel(logging.CRITICAL)
-
-    verbose_context = nullcontext() if verbose else QuietStdOut()
-
-
-
-# --------------------  HELPER CLASS --------------------
-
-
-def null_function(*args, **kwargs):
-    pass
-
-
 # ---------------------- FIXTURES ----------------------
 
 
@@ -66,14 +49,6 @@ def pipeline():
         "bossdb": pipeline.bossdb,
     }
 
-    if _tear_down:
-        with verbose_context:
-            pipeline.subject.Subject.delete()
-
-
-@pytest.fixture(scope="session")
-def testdata_paths():
-    return {"test1_stitched": "sub1"}
 
 @pytest.fixture(scope="session")
 def insert_upstream(pipeline):
