@@ -11,5 +11,5 @@ services:
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 15s
-      retries: 10
+      retries: 100
       interval: 15s
