@@ -24,7 +24,6 @@ sessions_dirs = [
 
 @pytest.fixture(scope="session")
 def test_data():
-    test_data_exists = True
 
     for p in sessions_dirs:
         try:
