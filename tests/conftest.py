@@ -23,22 +23,11 @@ sessions_dirs = [
 
 
 
-@pytest.fixture(autouse=True, scope="session")
-def setup(request):
-    """Take passed commandline variables, set as global"""
-    global verbose, _tear_down, test_user_data_dir, verbose_context
-
-    verbose = value_to_bool(request.config.getoption("--dj-verbose"))
-    _tear_down = value_to_bool(request.config.getoption("--dj-teardown"))
-    test_user_data_dir = Path(request.config.getoption("--dj-datadir"))
-    test_user_data_dir.mkdir(exist_ok=True)
-
     if not verbose:
         logging.getLogger("datajoint").setLevel(logging.CRITICAL)
 
     verbose_context = nullcontext() if verbose else QuietStdOut()
 
-    yield verbose_context, verbose
 
 
 # --------------------  HELPER CLASS --------------------
