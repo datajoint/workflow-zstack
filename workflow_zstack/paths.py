@@ -27,7 +27,7 @@ def _find_files_by_type(scan_key, filetype: str):
         get_volume_root_data_dir(),
         pathlib.Path((session.SessionDirectory & scan_key).fetch1("session_dir")),
     )
-    return sess_dir, [fp.as_posix() for fp in sess_dir.rglob(filetype)]
+    return sess_dir, [fp.as_posix() for fp in sess_dir.rglob(filetype)][0]
 
 
 def get_volume_tif_file(scan_key):
