@@ -21,15 +21,6 @@ def get_volume_root_data_dir() -> List[str]:
         return pathlib.Path(vol_root_dirs)
 
 
-def _find_files_by_type(scan_key, filetype: str):
-    """Uses roots + relative SessionDirectory, returns list of files with filetype"""
-    sess_dir = find_full_path(
-        get_volume_root_data_dir(),
-        pathlib.Path((session.SessionDirectory & scan_key).fetch1("session_dir")),
-    )
-    return sess_dir, [fp.as_posix() for fp in sess_dir.rglob(filetype)][0]
-
-
 def get_volume_tif_file(scan_key):
     """Retrieve the list of ScanImage files associated with a given Scan.
 
@@ -40,10 +31,16 @@ def get_volume_tif_file(scan_key):
         path (list): Absolute path(s) of the scan files.
 
     Raises:
-        FileNotFoundError: If the session directory or tiff files are not found.
+        FileNotFoundError: If the tiff file(s) are not found.
     """
-    # Folder structure: root / subject / session / .tif (raw)
-    sess_dir, tiff_filepaths = _find_files_by_type(scan_key, "*.tif")
+    # Folder structure: root / subject / session / .tif (raw)    
+    sess_dir = find_full_path(
+        get_volume_root_data_dir(),
+        pathlib.Path((session.SessionDirectory & scan_key).fetch1("session_dir")),
+    )
+    
+    tiff_filepaths = [fp.as_posix() for fp in sess_dir.rglob("*.tif")][0]
+
     if tiff_filepaths:
         return tiff_filepaths
     else:
