@@ -27,7 +27,6 @@ RUN \
 COPY ./requirements.txt /tmp/
 RUN \
     # workflow dependencies
-    apt-get install gcc ffmpeg libsm6 libxext6 -y && \
     pip install --no-cache-dir -r /tmp/requirements.txt && \
     # clean up
     rm /tmp/requirements.txt && \
