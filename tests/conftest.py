@@ -1,12 +1,11 @@
 import logging
 import os
 import pathlib
-from contextlib import nullcontext
 from pathlib import Path
 
 import datajoint as dj
 import pytest
-from element_interface.utils import QuietStdOut, find_full_path, value_to_bool
+from element_interface.utils import find_full_path
 
 from workflow_zstack.paths import get_volume_root_data_dir
 
@@ -20,47 +19,17 @@ sessions_dirs = [
     "subject1",
 ]
 
-
-
-
-@pytest.fixture(autouse=True, scope="session")
-def setup(request):
-    """Take passed commandline variables, set as global"""
-    global verbose, _tear_down, test_user_data_dir, verbose_context
-
-    verbose = value_to_bool(request.config.getoption("--dj-verbose"))
-    _tear_down = value_to_bool(request.config.getoption("--dj-teardown"))
-    test_user_data_dir = Path(request.config.getoption("--dj-datadir"))
-    test_user_data_dir.mkdir(exist_ok=True)
-
-    if not verbose:
-        logging.getLogger("datajoint").setLevel(logging.CRITICAL)
-
-    verbose_context = nullcontext() if verbose else QuietStdOut()
-
-    yield verbose_context, verbose
-
-
-# --------------------  HELPER CLASS --------------------
-
-
-def null_function(*args, **kwargs):
-    pass
-
-
 # ---------------------- FIXTURES ----------------------
 
 
 @pytest.fixture(scope="session")
-def test_data(dj_config):
-    test_data_exists = True
+def test_data():
 
     for p in sessions_dirs:
         try:
             find_full_path(get_volume_root_data_dir, p).as_posix()
-        except FileNotFoundError:
-            test_data_exists = False
-            break
+        except FileNotFoundError as e:
+            print(e)
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -77,14 +46,6 @@ def pipeline():
         "bossdb": pipeline.bossdb,
     }
 
-    if _tear_down:
-        with verbose_context:
-            pipeline.subject.Subject.delete()
-
-
-@pytest.fixture(scope="session")
-def testdata_paths():
-    return {"test1_stitched": "sub1"}
 
 @pytest.fixture(scope="session")
 def insert_upstream(pipeline):
@@ -117,7 +78,7 @@ def insert_upstream(pipeline):
     )
 
     session.SessionDirectory.insert1(
-        dict(session_key, session_dir="sub1"),
+        dict(session_key, session_dir="subject1/session1"),
         skip_duplicates=True,
     )
     scan.Scan.insert1(

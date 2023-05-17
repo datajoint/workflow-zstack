@@ -8,7 +8,7 @@ from element_calcium_imaging import imaging, scan
 from element_zstack import volume, volume_matching, bossdb
 
 from . import db_prefix
-from .paths import get_session_directory, get_volume_root_data_dir, get_volume_tif_file
+from .paths import get_volume_root_data_dir, get_volume_tif_file
 from .reference import Device
 
 __all__ = [
@@ -23,7 +23,6 @@ __all__ = [
     "volume_matching",
     "bossdb",
     "Device",
-    "get_session_directory",
     "get_volume_root_data_dir",
     "get_volume_tif_file",
 ]
