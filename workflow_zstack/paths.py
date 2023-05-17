@@ -22,13 +22,13 @@ def get_volume_root_data_dir() -> List[str]:
 
 
 def get_volume_tif_file(scan_key):
-    """Retrieve the list of ScanImage files associated with a given Scan.
+    """Retrieve the ScanImage file associated with a given Scan.
 
     Args:
         scan_key (dict): Primary key from Scan.
 
     Returns:
-        path (list): Absolute path(s) of the scan files.
+        path (str): Absolute path of the scan file.
 
     Raises:
         FileNotFoundError: If the tiff file(s) are not found.
