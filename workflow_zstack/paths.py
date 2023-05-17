@@ -39,9 +39,10 @@ def get_volume_tif_file(scan_key):
         pathlib.Path((session.SessionDirectory & scan_key).fetch1("session_dir")),
     )
     
-    tiff_filepaths = [fp.as_posix() for fp in sess_dir.rglob("*.tif")][0]
+    tiff_filepaths = [fp.as_posix() for fp in sess_dir.rglob("*.tif")]
 
     if tiff_filepaths:
-        return tiff_filepaths
+        assert len(tiff_filepaths) == 1, "More than 1 `.tif` file in file path. Please ensure the session directory contains only 1 image file."
+        return tiff_filepaths[0]
     else:
         raise FileNotFoundError(f"No tiff file found in {sess_dir}")
