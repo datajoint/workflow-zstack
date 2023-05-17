@@ -1,6 +1,6 @@
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--capture=tee-sys -p no:warnings --sw"
+addopts = "--capture=tee-sys -p no:warnings --cov=element_zstack --cov-report term-missing"
 # Verbosity: -v for pytest more verbose
 # Warnings: -p no:warnings to disable
 # Stepwise: --sw to restart pytest at last failure point

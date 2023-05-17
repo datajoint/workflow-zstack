@@ -25,4 +25,4 @@ def test_generate_pipeline(pipeline):
         volume_matching.VolumeMatch.VolumeMask.heading.secondary_attributes
     )
 
-    assert "web_adress" in (bossdb.VolumeUpload.WebAddress.heading.secondary_attributes)
+    assert "web_address" in (bossdb.VolumeUpload.WebAddress.heading.secondary_attributes)

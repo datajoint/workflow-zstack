@@ -100,4 +100,82 @@ def volume_volume(pipeline):
     volume.Volume.populate()
 
     yield
-    
+
+
+@pytest.fixture(scope="session")
+def volume_segmentation_task(pipeline):
+    volume = pipeline["volume"]
+    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    volume.SegmentationParamSet.insert_new_params(
+        segmentation_method="cellpose",
+        paramset_idx=1,
+        params=dict(
+            diameter=8,
+            min_size=2,
+            do_3d=False,
+            anisotropy=0.5,
+            model_type="nuclei",
+            channels=[[0, 0]],
+            z_axis=0,
+            skip_duplicates=True,
+        ),
+    )
+    yield
+
+
+@pytest.fixture(scope="session")
+def volume_segmentation_task(pipeline):
+    volume = pipeline["volume"]
+    volume.SegmentationTask.insert1(dict(
+        key,
+        paramset_idx=1,
+    ))
+    yield
+
+
+@pytest.fixture(scope="session")
+def volume_segmentation(pipeline):
+    volume = pipeline["volume"]
+    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    volume.Segmentation.populate(key)
+    yield
+
+
+@pytest.fixture(scope="session")
+def volume_voxel_size(pipeline):
+    volume = pipeline["volume"]
+    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    volume.VoxelSize.insert1(
+        dict(
+            key,
+            width=0.001,
+            height=0.001,
+            depth=0.001,
+            )
+        )
+    yield
+
+@pytest.fixture(scope="session")
+def bossdb_volume_upload_task(pipeline):
+    bossdb = pipeline["bossdb"]
+    volume = pipeline["volume"]
+    key = (volume.Segmentation & "subject='subject1'").fetch1("KEY")
+    col_name = "dataJointTestUpload"
+    exp_name = "CaImagingFinal"
+    chn_name = "test1"
+
+    bossdb.VolumeUploadTask.insert1(
+        dict(
+            key,
+            collection_name=col_name,
+            experiment_name=exp_name,
+            channel_name=chn_name,
+        ), skip_duplicates=True
+    )
+    yield
+
+@pytest.fixture(scope="session")
+def bossdb_volume_upload(pipeline):
+    bossdb = pipeline["bossdb"]
+    bossdb.VolumeUpload.populate()
+    yield
