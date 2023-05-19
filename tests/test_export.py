@@ -50,9 +50,9 @@ def test_export(pipeline):
     key = (volume.Volume & "subject='subject1'").fetch1("KEY")
     volume.SegmentationParamSet.insert_new_params(
         segmentation_method="cellpose",
-        paramset_idx=1,
+        paramset_idx=2,
         params=dict(
-            diameter=8,
+            diameter=None,
             min_size=2,
             do_3d=False,
             anisotropy=0.5,
@@ -64,7 +64,7 @@ def test_export(pipeline):
     )
     volume.SegmentationTask.insert1(dict(
         key,
-        paramset_idx=1,
+        paramset_idx=2,
         task_mode="trigger",
         ),
     skip_duplicates=True,
@@ -92,4 +92,4 @@ def test_export(pipeline):
         ), skip_duplicates=True
     )
 
-    bossdb.VolumeUpload.populate(upload_key)
+    bossdb.VolumeUpload.populate(segmentation_key)

@@ -3,7 +3,6 @@ def test_generate_pipeline(pipeline):
     session = pipeline["session"]
     scan = pipeline["scan"]
     volume = pipeline["volume"]
-    volume_matching = pipeline["volume_matching"]
     bossdb = pipeline["bossdb"]
 
     # Test connection from Subject to Session
@@ -19,10 +18,6 @@ def test_generate_pipeline(pipeline):
             bossdb.VolumeUploadTask.full_table_name in bossdb.VolumeUpload.parents(),
             volume.Segmentation.full_table_name in bossdb.VolumeUploadTask.parents(),
         ]
-    )
-
-    assert "confidence" in (
-        volume_matching.VolumeMatch.VolumeMask.heading.secondary_attributes
     )
 
     assert "web_address" in (bossdb.VolumeUpload.WebAddress.heading.secondary_attributes)

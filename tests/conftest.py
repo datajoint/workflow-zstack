@@ -42,7 +42,6 @@ def pipeline():
         "session": pipeline.session,
         "scan": pipeline.scan,
         "volume": pipeline.volume,
-        "volume_matching": pipeline.volume_matching,
         "bossdb": pipeline.bossdb,
     }
 
