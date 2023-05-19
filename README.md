@@ -1,11 +1,11 @@
 # DataJoint Workflow for ZStack Imaging
 
-The DataJoint Workflow for ZStack Imaging combines five DataJoint Elements for cell 
-segmentation, volume registration, and cell matching - Elements Lab, 
-Animal, Session, Calcium Imaging, and ZStack.  DataJoint Elements collectively standardize and automate data collection and 
-analysis for neuroscience experiments.  Each Element is a modular pipeline for data 
+The DataJoint Workflow for ZStack Imaging combines five DataJoint Elements for
+volume cell segmentation - Elements Lab, Animal, Session, Calcium Imaging, and
+ZStack. DataJoint Elements collectively standardize and automate data collection
+and analysis for neuroscience experiments. Each Element is a modular pipeline for data 
 storage and processing with corresponding database tables that can be combined with
-other Elements to assemble a fully functional pipeline.  This repository also provides 
+other Elements to assemble a fully functional pipeline. This repository also provides 
 a tutorial environment and notebook to learn the pipeline.
 
 ## Experiment Flowchart
@@ -18,7 +18,7 @@ a tutorial environment and notebook to learn the pipeline.
 
 ## Getting Started
 
-+ [Interactive tutorial on GitHub Codespaces](#interactive-tutorial)
++ [Interactive tutorial](#interactive-tutorial)
 
 + Install Element ZStack from PyPI
 
@@ -34,31 +34,35 @@ a tutorial environment and notebook to learn the pipeline.
 
 ## Interactive Tutorial
 
-+ The easiest way to learn about DataJoint Elements is to use the tutorial notebook within the included interactive environment configured using [Dev Container](https://containers.dev/).
-
 ### Launch Environment
 
-Here are some options that provide a great experience:
-
-- Cloud-based Environment (*recommended*)
-  - Launch using [GitHub Codespaces](https://github.com/features/codespaces) using the `+` option which will `Create codespace on main` in the codebase repository on your fork with default options. For more control, see the `...` where you may create `New with options...`.
-  - Build time for a codespace is several minutes. This is done infrequently and cached for convenience.
-  - Start time for a codespace is less than 1 minute. This will pull the built codespace from cache when you need it.
-  - *Tip*: Each month, GitHub renews a [free-tier](https://docs.github.com/en/billing/managing-billing-for-github-codespaces/about-billing-for-github-codespaces#monthly-included-storage-and-core-hours-for-personal-accounts) quota of compute and storage. Typically we run into the storage limits before anything else since codespaces consume storage while stopped. It is best to delete Codespaces when not actively in use and recreate when needed. We'll soon be creating prebuilds to avoid larger build times. Once any portion of your quota is reached, you will need to wait for it to be reset at the end of your cycle or add billing info to your GitHub account to handle overages.
-  - *Tip*: GitHub auto names the codespace but you can rename the codespace so that it is easier to identify later.
-
-- Local Environment
-  - Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  - Install [Docker](https://docs.docker.com/get-docker/)
-  - Install [VSCode](https://code.visualstudio.com/)
-  - Install the VSCode [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-  - `git clone` the codebase repository and open it in VSCode
-  - Use the `Dev Containers extension` to `Reopen in Container` (More info is in the `Getting started` included with the extension.)
-
-You will know your environment has finished loading once you either see a terminal open related to `Running postStartCommand` with a final message of `Done` or the `README.md` is opened in `Preview`.
++ Local Environment
+  + Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  + Install [VSCode](https://code.visualstudio.com/)
+  + Install [Conda](https://docs.conda.io/en/latest/miniconda.html)
+  + Configure a database.  See [here](https://tutorials.datajoint.org/setting-up/local-database.html) for details.
+  + `git clone` the code repository and open it in VSCode
+  + Install the repository with `pip install -e .`
+  + Setup a `dj_local_conf.json` with the `database.prefix` and `volume_root_data_dir`. See [User Guide](https://datajoint.com/docs/elements/user-guide/) for details.
+  + Add your example data to the `volume_root_data_dir`.
 
 ### Instructions
 
-1. We recommend you start by navigating to the `notebooks` directory on the left panel and go through the `tutorial.ipynb` Jupyter notebook. Execute the cells in the notebook to begin your walk through of the tutorial.
-
-1. Once you are done, see the options available to you in the menu in the bottom-left corner. For example, in codespace you will have an option to `Stop Current Codespace` but when running Dev Container on your own machine the equivalent option is `Reopen folder locally`. By default, GitHub will also automatically stop the Codespace after 30 minutes of inactivity.  Once the codespace is no longer being used, we recommend deleting the codespace.
+1. To upload data to BossDB, [create an account](https://api.bossdb.io) to
+   access the BossDB API and generate an API token. Please contact the team at [BossDB](https://bossdb.org)
+   to ensure you have `resource-manager` permissions for your account. 
+2. Follow the instructions below to set up the
+   [intern](https://github.com/jhuapl-boss/intern) REST API locally. 
+   + Create a new folder `.intern` in your root directory.
+   + Create a configuration file `intern.cfg` within the `.intern` folder. The
+     path to this file should be `~/.intern/intern.cfg`. 
+   + The `intern.cfg` file should contain the following exactly as shown below:
+   ```bash
+    # ~/.intern/intern.cfg
+    [Default]
+    protocol = https
+    host = api.bossdb.io
+    token = <your-api-key>
+   ```
+3. Use the instructions above to set up a local environment.
+4. Navigate to the `notebooks` directory. Execute the cells in the notebooks to begin your walk through of the tutorial.

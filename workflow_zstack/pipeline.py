@@ -5,7 +5,7 @@ from element_animal import subject, surgery
 from element_animal.subject import Subject
 from element_session import session_with_id as session
 from element_calcium_imaging import imaging, scan
-from element_zstack import volume, volume_matching, bossdb
+from element_zstack import volume, bossdb
 
 from . import db_prefix
 from .paths import get_volume_root_data_dir, get_volume_tif_file
@@ -20,7 +20,6 @@ __all__ = [
     "subject",
     "surgery",
     "volume",
-    "volume_matching",
     "bossdb",
     "Device",
     "get_volume_root_data_dir",
@@ -44,5 +43,4 @@ imaging.activate(db_prefix + "imaging", db_prefix + "scan", linking_module=__nam
 Mask = imaging.Segmentation.Mask
 Scan = scan.Scan
 volume.activate(db_prefix + "volume", linking_module=__name__)
-volume_matching.activate(db_prefix + "volume_matching")
 bossdb.activate(db_prefix + "bossdb", linking_module=__name__)
