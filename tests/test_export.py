@@ -62,11 +62,13 @@ def test_export(pipeline):
             skip_duplicates=True,
         ),
     )
-    volume.SegmentationTask.update1(dict(
+    volume.SegmentationTask.insert1(dict(
         key,
         paramset_idx=1,
-        task_mode="load",
-    ))
+        task_mode="trigger",
+        ),
+    skip_duplicates=True,
+    )
     segmentation_key = (volume.SegmentationTask & "subject='subject1'").fetch1("KEY")
     volume.Segmentation.populate(segmentation_key)
     volume.VoxelSize.insert1(
