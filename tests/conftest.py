@@ -102,7 +102,7 @@ def volume_volume(pipeline):
 
 
 @pytest.fixture(scope="session")
-def volume_segmentation_task(pipeline):
+def volume_segmentation_param_set(pipeline):
     volume = pipeline["volume"]
     key = (volume.Volume & "subject='subject1'").fetch1("KEY")
     volume.SegmentationParamSet.insert_new_params(
@@ -116,7 +116,6 @@ def volume_segmentation_task(pipeline):
             model_type="nuclei",
             channels=[[0, 0]],
             z_axis=0,
-            skip_duplicates=True,
         ),
     )
     yield
@@ -125,6 +124,7 @@ def volume_segmentation_task(pipeline):
 @pytest.fixture(scope="session")
 def volume_segmentation_task(pipeline):
     volume = pipeline["volume"]
+    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
     volume.SegmentationTask.insert1(dict(
         key,
         paramset_idx=1,

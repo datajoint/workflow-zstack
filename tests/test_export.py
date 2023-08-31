@@ -59,7 +59,6 @@ def test_export(pipeline):
             model_type="nuclei",
             channels=[[0, 0]],
             z_axis=0,
-            skip_duplicates=True,
         ),
     )
     volume.SegmentationTask.insert1(dict(
