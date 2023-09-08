@@ -16,7 +16,7 @@ logger = logging.getLogger("datajoint")
 
 
 sessions_dirs = [
-    "subject1",
+    "subject2",
 ]
 
 # ---------------------- FIXTURES ----------------------
@@ -57,7 +57,7 @@ def insert_upstream(pipeline):
 
     subject.Subject.insert1(
         dict(
-            subject="subject1",
+            subject="subject2",
             sex="M",
             subject_birth_date="2023-01-01",
             subject_description="Cellpose segmentation of volumetric data."),
@@ -65,7 +65,7 @@ def insert_upstream(pipeline):
     )
 
     session_key = dict(
-        subject="subject1",
+        subject="subject2",
         session_id=0,
     )
     session.Session.insert1(
@@ -77,7 +77,7 @@ def insert_upstream(pipeline):
     )
 
     session.SessionDirectory.insert1(
-        dict(session_key, session_dir="subject1/session1"),
+        dict(session_key, session_dir="subject2"),
         skip_duplicates=True,
     )
     scan.Scan.insert1(
@@ -104,12 +104,12 @@ def volume_volume(pipeline):
 @pytest.fixture(scope="session")
 def volume_segmentation_param_set(pipeline):
     volume = pipeline["volume"]
-    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    key = (volume.Volume & "subject='subject2'").fetch1("KEY")
     volume.SegmentationParamSet.insert_new_params(
         segmentation_method="cellpose",
         paramset_idx=1,
         params=dict(
-            diameter=8,
+            diameter=None,
             min_size=2,
             do_3d=False,
             anisotropy=0.5,
@@ -124,7 +124,7 @@ def volume_segmentation_param_set(pipeline):
 @pytest.fixture(scope="session")
 def volume_segmentation_task(pipeline):
     volume = pipeline["volume"]
-    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    key = (volume.Volume & "subject='subject2'").fetch1("KEY")
     volume.SegmentationTask.insert1(dict(
         key,
         paramset_idx=1,
@@ -135,7 +135,7 @@ def volume_segmentation_task(pipeline):
 @pytest.fixture(scope="session")
 def volume_segmentation(pipeline):
     volume = pipeline["volume"]
-    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    key = (volume.Volume & "subject='subject2'").fetch1("KEY")
     volume.Segmentation.populate(key)
     yield
 
@@ -143,7 +143,7 @@ def volume_segmentation(pipeline):
 @pytest.fixture(scope="session")
 def volume_voxel_size(pipeline):
     volume = pipeline["volume"]
-    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    key = (volume.Volume & "subject='subject2'").fetch1("KEY")
     volume.VoxelSize.insert1(
         dict(
             key,
@@ -158,10 +158,10 @@ def volume_voxel_size(pipeline):
 def bossdb_volume_upload_task(pipeline):
     bossdb = pipeline["bossdb"]
     volume = pipeline["volume"]
-    key = (volume.Segmentation & "subject='subject1'").fetch1("KEY")
+    key = (volume.Segmentation & "subject='subject2'").fetch1("KEY")
     col_name = "dataJointTestUpload"
     exp_name = "CaImagingFinal"
-    chn_name = "test1"
+    chn_name = "test2"
 
     bossdb.VolumeUploadTask.insert1(
         dict(

@@ -33,16 +33,18 @@ def get_volume_tif_file(scan_key):
     Raises:
         FileNotFoundError: If the tiff file(s) are not found.
     """
-    # Folder structure: root / subject / session / .tif (raw)    
+    # Folder structure: root / subject / session / .tif (raw)
     sess_dir = find_full_path(
         get_volume_root_data_dir(),
         pathlib.Path((session.SessionDirectory & scan_key).fetch1("session_dir")),
     )
-    
+
     tiff_filepaths = [fp.as_posix() for fp in sess_dir.rglob("*.tif")]
 
     if tiff_filepaths:
-        assert len(tiff_filepaths) == 1, "More than 1 `.tif` file in file path. Please ensure the session directory contains only 1 image file."
+        assert (
+            len(tiff_filepaths) == 1
+        ), "More than 1 `.tif` file in file path. Please ensure the session directory contains only 1 image file."
         return tiff_filepaths[0]
     else:
         raise FileNotFoundError(f"No tiff file found in {sess_dir}")
