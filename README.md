@@ -53,7 +53,7 @@ a tutorial environment and notebook to learn the pipeline.
    to ensure you have `resource-manager` permissions for your account. 
 2. Follow the instructions below to set up the
    [intern](https://github.com/jhuapl-boss/intern) REST API locally. 
-   + Create a new folder `.intern` in your root directory.
+   + Create a new folder `.intern` in your user directory.
    + Create a configuration file `intern.cfg` within the `.intern` folder. The
      path to this file should be `~/.intern/intern.cfg`. 
    + The `intern.cfg` file should contain the following exactly as shown below:

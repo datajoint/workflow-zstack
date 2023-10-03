@@ -15,7 +15,7 @@ def test_export(pipeline):
 
     subject.Subject.insert1(
         dict(
-            subject="subject1",
+            subject="subject2",
             sex="M",
             subject_birth_date="2023-01-01",
             subject_description="Cellpose segmentation of volumetric data."),
@@ -23,7 +23,7 @@ def test_export(pipeline):
     )
 
     session_key = dict(
-        subject="subject1",
+        subject="subject2",
         session_id=0,
     )
     session.Session.insert1(
@@ -35,7 +35,7 @@ def test_export(pipeline):
     )
 
     session.SessionDirectory.insert1(
-        dict(session_key, session_dir="subject1/session1"),
+        dict(session_key, session_dir="subject2"),
         skip_duplicates=True,
     )
     scan.Scan.insert1(
@@ -46,11 +46,11 @@ def test_export(pipeline):
         ),
         skip_duplicates=True,
     )
-    volume.Volume.populate()
-    key = (volume.Volume & "subject='subject1'").fetch1("KEY")
+    volume.Volume.populate(session_key)
+    key = (volume.Volume & "subject='subject2'").fetch1("KEY")
     volume.SegmentationParamSet.insert_new_params(
         segmentation_method="cellpose",
-        paramset_idx=2,
+        paramset_idx=1,
         params=dict(
             diameter=None,
             min_size=2,
@@ -59,21 +59,21 @@ def test_export(pipeline):
             model_type="nuclei",
             channels=[[0, 0]],
             z_axis=0,
-            skip_duplicates=True,
         ),
     )
     volume.SegmentationTask.insert1(dict(
         key,
-        paramset_idx=2,
+        paramset_idx=1,
         task_mode="trigger",
         ),
     skip_duplicates=True,
     )
-    segmentation_key = (volume.SegmentationTask & "subject='subject1'").fetch1("KEY")
+    segmentation_key = (volume.SegmentationTask & "subject='subject2'").fetch1("KEY")
     volume.Segmentation.populate(segmentation_key)
     volume.VoxelSize.insert1(
         dict(
-            segmentation_key,
+            **session_key,
+            scan_id=0,
             width=0.001,
             height=0.001,
             depth=0.001,
@@ -81,7 +81,7 @@ def test_export(pipeline):
         )
     col_name = "dataJointTestUpload"
     exp_name = "CaImagingFinal"
-    chn_name = "test1"
+    chn_name = "test2"
 
     bossdb.VolumeUploadTask.insert1(
         dict(

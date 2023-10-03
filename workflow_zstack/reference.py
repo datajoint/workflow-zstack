@@ -7,20 +7,9 @@ schema = dj.Schema(db_prefix + "reference")
 
 @schema
 class Device(dj.Lookup):
-    """Table for managing lab equipment.
-
-    Attributes:
-        device ( varchar(32) ): Device short name.
-        modality ( varchar(64) ): Modality for which this device is used.
-        description ( varchar(256) ): Optional. Description of device.
-    """
-
     definition = """
-    device             : varchar(32)
+    device_id           : smallint
     ---
-    modality           : varchar(64)
-    description=null   : varchar(256)
+    device_name         : varchar(32)  # user-friendly name of the device
+    device_description  : varchar(256)
     """
-    contents = [
-        ["scanner1", "fluorescence microscope", ""],
-    ]
