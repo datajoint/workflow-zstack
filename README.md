@@ -1,3 +1,7 @@
+> ⚠️ **This repository is archived and no longer maintained.**
+> Example workflow superseded by elements.
+> For current DataJoint development, see [element-zstack](https://github.com/datajoint/element-zstack).
+
 # DataJoint Workflow for ZStack Imaging
 
 The DataJoint Workflow for ZStack Imaging combines five DataJoint Elements for
